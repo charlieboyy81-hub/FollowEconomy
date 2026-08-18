@@ -1,0 +1,51 @@
+```yaml
+name: FollowEconomy
+version: 1.0.0
+main: com.myserver.followeconomy.FollowEconomy
+api-version: '1.21'
+
+author: MeRabbits
+description: Follow players and receive EconomyShopGUI transaction notifications.
+
+softdepend:
+  - EconomyShopGUI
+  - EconomyShopGUI-Premium
+
+commands:
+  follow:
+    description: Follow a player.
+    usage: /follow <player>
+    permission: followeconomy.follow
+
+  unfollow:
+    description: Stop following a player.
+    usage: /unfollow <player>
+    permission: followeconomy.unfollow
+
+  following:
+    description: View who you are following.
+    usage: /following
+    permission: followeconomy.following
+
+  followers:
+    description: View your followers.
+    usage: /followers
+    permission: followeconomy.followers
+
+permissions:
+  followeconomy.follow:
+    description: Allows players to follow other players.
+    default: true
+
+  followeconomy.unfollow:
+    description: Allows players to unfollow a player.
+    default: true
+
+  followeconomy.following:
+    description: Allows players to view who they are following.
+    default: true
+
+  followeconomy.followers:
+    description: Allows players to view who their followers are.
+    default: true
+```
