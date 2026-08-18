@@ -1,0 +1,5 @@
+messages:
+  single-sell: "&8[&6Follow&8] &e%player% &7sold &f%amount%x %item% &7for &a$%money%"
+  multiple-sell: "&8[&6Follow&8] &e%player% &7sold multiple items for &a$%money%"
+  single-buy: "&8[&6Follow&8] &e%player% &7bought &f%amount%x %item% &7for &a$%money%"
+  multiple-buy: "&8[&6Follow&8] &e%player% &7bought multiple items for &a$%money%"
