@@ -10,6 +10,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -29,9 +30,6 @@ public class FollowEconomy extends JavaPlugin implements Listener, CommandExecut
     private File followingFile;
     private YamlConfiguration followingConfig;
 
-    /*
-     * follower UUID -> players they follow
-     */
     private final Map<UUID, Set<UUID>> following = new HashMap<>();
 
     private final DecimalFormat moneyFormat = new DecimalFormat("#,##0.00");
@@ -39,7 +37,6 @@ public class FollowEconomy extends JavaPlugin implements Listener, CommandExecut
     @Override
     public void onEnable() {
         saveDefaultConfig();
-
         loadFollowing();
 
         getServer().getPluginManager().registerEvents(this, this);
@@ -66,7 +63,7 @@ public class FollowEconomy extends JavaPlugin implements Listener, CommandExecut
     }
 
     private void registerCommand(String name) {
-        Command command = getCommand(name);
+        PluginCommand command = getCommand(name);
 
         if (command == null) {
             getLogger().severe("Command '" + name + "' is missing from plugin.yml!");
@@ -75,7 +72,8 @@ public class FollowEconomy extends JavaPlugin implements Listener, CommandExecut
 
         command.setExecutor(this);
 
-        if (name.equalsIgnoreCase("follow") || name.equalsIgnoreCase("unfollow")) {
+        if (name.equalsIgnoreCase("follow")
+                || name.equalsIgnoreCase("unfollow")) {
             command.setTabCompleter(this);
         }
     }
@@ -287,7 +285,8 @@ public class FollowEconomy extends JavaPlugin implements Listener, CommandExecut
             return;
         }
 
-        List<Player> onlineFollowers = getOnlineFollowers(trader.getUniqueId());
+        List<Player> onlineFollowers =
+                getOnlineFollowers(trader.getUniqueId());
 
         if (onlineFollowers.isEmpty()) {
             return;
@@ -299,11 +298,8 @@ public class FollowEconomy extends JavaPlugin implements Listener, CommandExecut
 
         Map<ShopItem, Integer> items = event.getItems();
 
-        /*
-         * EconomyShopGUI supplies multiple items for transactions
-         * such as sell-all. Normal buy/sell transactions use one item.
-         */
-        boolean multipleItems = items != null && items.size() > 1;
+        boolean multipleItems =
+                items != null && items.size() > 1;
 
         double totalPrice = event.getPrice();
 
@@ -320,11 +316,14 @@ public class FollowEconomy extends JavaPlugin implements Listener, CommandExecut
         if (multipleItems) {
 
             if (selling) {
+
                 message = getConfig().getString(
                         "messages.multiple-sell",
                         "&8[&6Follow&8] &e%player% &7sold multiple items for &a$%money%"
                 );
+
             } else {
+
                 message = getConfig().getString(
                         "messages.multiple-buy",
                         "&8[&6Follow&8] &e%player% &7bought multiple items for &a$%money%"
@@ -460,6 +459,7 @@ public class FollowEconomy extends JavaPlugin implements Listener, CommandExecut
 
         return Arrays.stream(materialName.split(" "))
                 .map(word -> {
+
                     if (word.isEmpty()) {
                         return word;
                     }
@@ -536,7 +536,7 @@ public class FollowEconomy extends JavaPlugin implements Listener, CommandExecut
     }
 
     // =========================================================
-    // FOLLOWING SAVE / LOAD
+    // SAVE / LOAD
     // =========================================================
 
     private void loadFollowing() {
@@ -600,16 +600,12 @@ public class FollowEconomy extends JavaPlugin implements Listener, CommandExecut
                 for (String targetString : targetStrings) {
 
                     try {
-                        targets.add(
-                                UUID.fromString(targetString)
-                        );
+                        targets.add(UUID.fromString(targetString));
                     } catch (IllegalArgumentException ignored) {
-                        // Ignore invalid UUID.
                     }
                 }
 
                 if (!targets.isEmpty()) {
-
                     following.put(
                             followerUUID,
                             targets
@@ -661,10 +657,6 @@ public class FollowEconomy extends JavaPlugin implements Listener, CommandExecut
             );
         }
     }
-
-    // =========================================================
-    // CHAT COLOR
-    // =========================================================
 
     private String color(String message) {
 
