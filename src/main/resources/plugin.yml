@@ -1,4 +1,3 @@
-```yaml
 name: FollowEconomy
 version: 1.0.0
 main: com.myserver.followeconomy.FollowEconomy
@@ -48,4 +47,3 @@ permissions:
   followeconomy.followers:
     description: Allows players to view who their followers are.
     default: true
-```
