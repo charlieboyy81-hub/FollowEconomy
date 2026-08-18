@@ -4,13 +4,17 @@ main: com.myserver.followeconomy.FollowEconomy
 api-version: '1.21'
 
 author: MeRabbits
-description: Follow players and receive EconomyShopGUI transaction notifications.
+description: Follow players, receive EconomyShopGUI transaction notifications, and control teleport requests.
 
 softdepend:
   - EconomyShopGUI
   - EconomyShopGUI-Premium
 
+depend:
+  - Essentials
+
 commands:
+
   follow:
     description: Follow a player.
     usage: /follow <player>
@@ -32,6 +36,7 @@ commands:
     permission: followeconomy.followers
 
 permissions:
+
   followeconomy.follow:
     description: Allows players to follow other players.
     default: true
