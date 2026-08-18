@@ -1,4 +1,3 @@
-```java
 package com.myserver.followeconomy;
 
 import me.gypopo.economyshopgui.api.events.PostTransactionEvent;
@@ -676,4 +675,3 @@ public class FollowEconomy extends JavaPlugin implements Listener, CommandExecut
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 }
-```
